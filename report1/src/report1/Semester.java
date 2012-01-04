@@ -4,13 +4,17 @@
  */
 package report1;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 /**
  *
  * @author ASUS
  */
-public class Semester {
+public class Semester implements Comparable<Semester> {
 
 // <editor-fold desc="Private Data Members">
 
@@ -28,7 +32,12 @@ public class Semester {
         setSemesterNumber(semesterNumber);
         setYear(year);
     }
-
+    
+    private Semester()
+    {
+        
+    }
+    
 // </editor-fold>
     
 // <editor-fold desc="Getters and Setters">
@@ -66,6 +75,54 @@ public class Semester {
         return "Semester " + semesterNumber
              + "in " + year
              + ", End Date: " + endDate.toString();
+    }
+    
+    protected @Override Object clone()
+    {
+        return new Semester(semesterNumber, year, endDate);
+    }
+    
+    public @Override int compareTo(Semester o)
+    {
+        if (o==null)
+            return 1;
+        if (o==this)
+            return 0;
+        if (this.year>o.year)
+            return 1;
+        else if (this.year<o.year)
+            return -1;
+        else if (this.semesterNumber>o.semesterNumber)
+            return 1;
+        else if (this.semesterNumber>o.semesterNumber)
+            return -1;
+        else
+            return 0;
+    }
+    
+// </editor-fold>
+    
+// <editor-fold desc="Text File IO">
+    
+    public void fileWrite(PrintWriter writer)
+    {
+        StringBuilder Temp = new StringBuilder();
+        Temp.append(semesterNumber);
+        Temp.append('\t');
+        Temp.append(year);
+        Temp.append('\t');
+        Temp.append(endDate.getTime());
+        writer.println(Temp.toString());
+    }
+    
+    public static Semester fileRead(BufferedReader reader) throws IOException
+    {
+        Semester Temp = new Semester();
+        StringTokenizer T = new StringTokenizer(reader.readLine(), "\t");
+        Temp.semesterNumber = new Integer(T.nextToken());
+        Temp.year = new Integer(T.nextToken());
+        Temp.endDate = new Date(new Long(T.nextToken()));
+        return Temp;
     }
     
 // </editor-fold>

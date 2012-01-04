@@ -2,15 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package report1;
 
-import org.omg.CORBA.DynAnyPackage.InvalidValue;
+package report1;
 
 /**
  *
  * @author ASUS
  */
-public class Person implements Cloneable, Comparable<Person> {
+public abstract class Person implements Cloneable {
     
 // <editor-fold desc="Private Data Members">
     
@@ -21,11 +20,16 @@ public class Person implements Cloneable, Comparable<Person> {
     
 // <editor-fold desc="Constructors">
     
-    public Person(String firstName, String lastName, long NSN) throws InvalidValue
+    public Person(String firstName, String lastName, long NSN)
     {
         setFirstName(firstName);
         setLastName(lastName);
         setNSN(NSN);
+    }
+    
+    protected Person()
+    {
+        
     }
     
 // </editor-fold>
@@ -36,11 +40,8 @@ public class Person implements Cloneable, Comparable<Person> {
         return NSN;
     }
 
-    public final void setNSN(Long NSN) throws InvalidValue {
-        if (NSN>0)
-            this.NSN = NSN;
-        else
-            throw new InvalidValue("National Security Number cannot be negative.");
+    public final void setNSN(Long NSN) {
+        this.NSN = NSN;
     }
 
     public final String getFirstName() {
@@ -63,27 +64,29 @@ public class Person implements Cloneable, Comparable<Person> {
     
 // <editor-fold desc="Implementatoins and Overrides">
     
+    // Implements Cloneable, but doesn't implement it because it's abstract
     
-    
-// </editor-fold>
-
     public @Override String toString()
     {
-        return "Person: "
-             + firstName + ' ' + lastName
-             + ", National SN: " + NSN;
+        return firstName + ' ' + lastName + ", National SN: " + NSN;
     }
     
-    protected @Override Object clone() throws CloneNotSupportedException
+    public @Override boolean equals(Object obj)
     {
-        try
-        {
-            return new Person(new String(this.firstName),new String(this.lastName),NSN);
-        }
-        catch(InvalidValue E)
-        {
-            return null;
-        }
+        if (obj==null)
+            return false;
+        if (this==obj)
+            return true;
+        if (!(obj instanceof Person))
+            return false;
+        Person Temp = (Person)obj;
+        if   (  (this.NSN == Temp.NSN)
+             && (this.firstName.equals(Temp.firstName))
+             && (this.lastName.equals(Temp.lastName)) )
+            return true;
+        return false;
     }
+    
+// </editor-fold>
     
 }

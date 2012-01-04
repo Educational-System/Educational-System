@@ -4,6 +4,10 @@
  */
 package report1;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  *
  * @author ASUS
@@ -61,9 +65,9 @@ public class Supervisor implements Cloneable {
     
     public @Override String toString()
     {
-        return  "Supervisor:\n"
-              + academicStaff.toString() + '\n'
-              + course.toString() + '\n'
+        return  "Supervisor: "
+              + academicStaff.toString() + ", "
+              + course.toString() + ", "
               + semester.toString();
     }
     
@@ -87,6 +91,26 @@ public class Supervisor implements Cloneable {
     protected @Override Object clone()
     {
         return new Supervisor(academicStaff, course, semester);
+    }
+    
+// </editor-fold>
+    
+// <editor-fold desc="Text File IO">
+    
+    public void fileWrite(PrintWriter writer)
+    {
+        academicStaff.fileWrite(writer);
+        course.fileWrite(writer);
+        semester.fileWrite(writer);
+        writer.println();
+    }
+    
+    public static Supervisor fileRead(BufferedReader reader) throws IOException
+    {
+        AcademicStaff A = AcademicStaff.fileRead(reader);
+        Course C = Course.fileRead(reader);
+        Semester S = Semester.fileRead(reader);
+        return new Supervisor(A, C, S);
     }
     
 // </editor-fold>

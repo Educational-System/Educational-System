@@ -4,19 +4,23 @@
  */
 package report1;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 /**
  *
  * @author ASUS
  */
-public class AcademicStaff extends Person {
+public class AcademicStaff extends Person implements Comparable<AcademicStaff> {
     
-    public enum AcademicDegrees
+    public enum AcademicDegrees implements Comparable<AcademicDegrees>
     {
         Bachelor,
         Master,
-        PHD
+        PHD;
     }
     
 // <editor-fold desc="Private Data Members">
@@ -33,6 +37,11 @@ public class AcademicStaff extends Person {
         super(firstName,lastName,NationalSN);
         setAcademicDegreee(Degree);
         setDegreeDate(DegreeDate);
+    }
+    
+    private AcademicStaff()
+    {
+        
     }
     
 // </editor-fold>
@@ -85,6 +94,74 @@ public class AcademicStaff extends Person {
     protected @Override Object clone()
     {
         return new AcademicStaff(getFirstName(),getLastName(), getNSN(),academicDegreee,degreeDate);
+    }
+    
+    public @Override int compareTo(AcademicStaff o)
+    {
+        if (o==null)
+            return 1;
+        if (o==this)
+            return 0;
+        if (this.academicDegreee.compareTo(o.academicDegreee)>1)
+            return 1;
+        else if (this.academicDegreee.compareTo(o.academicDegreee)<0)
+            return -1;
+        else if (this.degreeDate.compareTo(o.degreeDate)<0)
+            return -1;
+        else if (this.degreeDate.compareTo(o.degreeDate)>0)
+            return -1;
+        else
+        {
+            String Name1 = this.getFirstName() + ' ' + this.getLastName();
+            String Name2 = o.getFirstName() + ' ' + o.getLastName();
+            if (Name1.compareTo(Name2)>0)
+                return 1;
+            else if (Name1.compareTo(Name2)<0)
+                return -1;
+            else if (this.getNSN()>o.getNSN())
+                return 1;
+            else if (this.getNSN()<o.getNSN())
+                return -1;
+            else
+                return 0;
+        }
+    }
+        
+// </editor-fold>
+    
+// <editor-fold desc="Text File IO">
+    
+    public void fileWrite(PrintWriter writer)
+    {
+        StringBuilder Temp = new StringBuilder();
+        Temp.append(getFirstName());
+        Temp.append('\t');
+        Temp.append(getLastName());
+        Temp.append('\t');
+        Temp.append(getNSN());
+        Temp.append('\t');
+        Temp.append(academicDegreee);
+        Temp.append('\t');
+        Temp.append(degreeDate.getTime());
+        writer.println(Temp.toString());
+    }
+    
+    public static AcademicStaff fileRead(BufferedReader reader) throws IOException
+    {
+        AcademicStaff Temp = new AcademicStaff();
+        StringTokenizer T = new StringTokenizer(reader.readLine(), "\t");
+        Temp.setFirstName(T.nextToken());
+        Temp.setLastName(T.nextToken());
+        Temp.setNSN(new Long(T.nextToken()));
+        String S = T.nextToken();
+        if (S.equals(AcademicDegrees.PHD.name()))
+            Temp.academicDegreee = AcademicDegrees.PHD;
+        else if (S.equals(AcademicDegrees.Master.name()))
+            Temp.academicDegreee = AcademicDegrees.Master;
+        else
+            Temp.academicDegreee = AcademicDegrees.Bachelor;
+        Temp.setDegreeDate(new Date(new Long(T.nextToken())));
+        return Temp;
     }
     
 // </editor-fold>

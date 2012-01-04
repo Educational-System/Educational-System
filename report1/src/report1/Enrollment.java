@@ -4,6 +4,10 @@
  */
 package report1;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  *
  * @author ASUS
@@ -110,6 +114,28 @@ public class Enrollment implements Cloneable, Comparable<Enrollment> {
                 return true;
         }
         return false;
+    }
+    
+// </editor-fold>
+    
+// <editor-fold desc="Text File IO">
+    
+    public void fileWrite(PrintWriter writer)
+    {
+        writer.println(mark);
+        student.fileWrite(writer);
+        course.fileWrite(writer);
+        semester.fileWrite(writer);
+        writer.println();
+    }
+    
+    public Enrollment fileRead(BufferedReader reader) throws IOException
+    {
+        int m = new Integer(reader.readLine());
+        Student S = Student.fileRead(reader);
+        Course C = Course.fileRead(reader);
+        Semester T = Semester.fileRead(reader);
+        return new Enrollment(S, C, T, m);
     }
     
 // </editor-fold>
