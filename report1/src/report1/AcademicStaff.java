@@ -5,6 +5,9 @@
 package report1;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -131,7 +134,7 @@ public class AcademicStaff extends Person implements Comparable<AcademicStaff> {
     
 // <editor-fold desc="Text File IO">
     
-    public void fileWrite(PrintWriter writer)
+    public void textFileWrite(PrintWriter writer)
     {
         StringBuilder Temp = new StringBuilder();
         Temp.append(getFirstName());
@@ -146,7 +149,7 @@ public class AcademicStaff extends Person implements Comparable<AcademicStaff> {
         writer.println(Temp.toString());
     }
     
-    public static AcademicStaff fileRead(BufferedReader reader) throws IOException
+    public static AcademicStaff textFileRead(BufferedReader reader) throws IOException
     {
         AcademicStaff Temp = new AcademicStaff();
         StringTokenizer T = new StringTokenizer(reader.readLine(), "\t");
@@ -161,6 +164,56 @@ public class AcademicStaff extends Person implements Comparable<AcademicStaff> {
         else
             Temp.academicDegreee = AcademicDegrees.Bachelor;
         Temp.setDegreeDate(new Date(new Long(T.nextToken())));
+        return Temp;
+    }
+    
+// </editor-fold>
+    
+// <editor-fold desc="Binary File IO">
+    
+    public void binaryFileWrite(DataOutputStream writer) throws IOException
+    {
+        writer.writeInt(getFirstName().length());
+        writer.writeChars(getFirstName());
+        writer.writeInt(getLastName().length());
+        writer.writeChars(getLastName());
+        writer.writeLong(getNSN());
+        writer.writeInt(academicDegreee.ordinal());
+        writer.writeLong(degreeDate.getTime());
+    }
+    
+    public static AcademicStaff binaryFileRead(DataInputStream reader) throws IOException
+    {
+        AcademicStaff Temp = new AcademicStaff();
+        
+        int Length = reader.readInt();
+        StringBuilder S = new StringBuilder(Length);
+        for (int i = 0;i<Length;i++)
+            S.append(reader.readChar());
+        Temp.setFirstName(S.toString());
+        
+        Length = reader.readInt();
+        S = new StringBuilder(Length);
+        for (int i = 0;i<Length;i++)
+            S.append(reader.readChar());
+        Temp.setLastName(S.toString());
+        
+        Temp.setNSN(reader.readLong());
+        
+        Length = reader.readInt();
+        switch (Length)
+        {
+            case 0:
+                Temp.setAcademicDegreee(AcademicDegrees.Bachelor);
+                break;
+            case 1:
+                Temp.setAcademicDegreee(AcademicDegrees.Master);
+                break;
+            case 2:
+                Temp.setAcademicDegreee(AcademicDegrees.PHD);
+        }
+        
+        Temp.setDegreeDate(new Date(new Long(reader.readLong())));
         return Temp;
     }
     

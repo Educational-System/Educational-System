@@ -5,6 +5,8 @@
 package report1;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
@@ -102,7 +104,7 @@ public class Student extends Person implements Comparable<Student> {
     
 // <editor-fold desc="Text File IO">
     
-    public void fileWrite(PrintWriter writer)
+    public void textFileWrite(PrintWriter writer)
     {
         StringBuilder Temp = new StringBuilder();
         Temp.append(getFirstName());
@@ -115,7 +117,7 @@ public class Student extends Person implements Comparable<Student> {
         writer.println(Temp.toString());
     }
     
-    public static Student fileRead(BufferedReader reader) throws IOException
+    public static Student textFileRead(BufferedReader reader) throws IOException
     {
         Student Temp = new Student();
         StringTokenizer T = new StringTokenizer(reader.readLine(), "\t");
@@ -123,6 +125,42 @@ public class Student extends Person implements Comparable<Student> {
         Temp.setLastName(T.nextToken());
         Temp.setNSN(new Long(T.nextToken()));
         Temp.studentNumber = new Long(T.nextToken());
+        return Temp;
+    }
+    
+// </editor-fold>
+    
+// <editor-fold desc="Binary File IO">
+    
+    public void binaryFileWrite(DataOutputStream writer) throws IOException
+    {
+        writer.writeInt(getFirstName().length());
+        writer.writeChars(getFirstName());
+        writer.writeInt(getLastName().length());
+        writer.writeChars(getLastName());
+        writer.writeLong(getNSN());
+        writer.writeLong(studentNumber);
+    }
+    
+    public static Student binaryFileRead(DataInputStream reader) throws IOException
+    {
+        Student Temp = new Student();
+        
+        int Length = reader.readInt();
+        StringBuilder S = new StringBuilder(Length);
+        for (int i = 0;i<Length;i++)
+            S.append(reader.readChar());
+        Temp.setFirstName(S.toString());
+        
+        Length = reader.readInt();
+        S = new StringBuilder(Length);
+        for (int i = 0;i<Length;i++)
+            S.append(reader.readChar());
+        Temp.setLastName(S.toString());
+        
+        Temp.setNSN(reader.readLong());
+        Temp.studentNumber = reader.readLong();
+        
         return Temp;
     }
     

@@ -5,6 +5,8 @@
 package report1;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
@@ -86,7 +88,7 @@ public class Course implements Cloneable {
     
 // <editor-fold desc="Text File IO">
     
-    public void fileWrite(PrintWriter writer)
+    public void textFileWrite(PrintWriter writer)
     {
         StringBuilder Temp = new StringBuilder();
         Temp.append(courseName);
@@ -95,12 +97,37 @@ public class Course implements Cloneable {
         writer.println(Temp.toString());
     }
     
-    public static Course fileRead(BufferedReader reader) throws IOException
+    public static Course textFileRead(BufferedReader reader) throws IOException
     {
         Course Temp = new Course();
         StringTokenizer T = new StringTokenizer(reader.readLine(), "\t");
         Temp.courseName = T.nextToken();
         Temp.courseID = new Long(T.nextToken());
+        return Temp;
+    }
+    
+// </editor-fold>
+    
+// <editor-fold desc="Binary File IO">
+    
+    public void binaryFileWrite(DataOutputStream writer) throws IOException
+    {
+        writer.writeInt(courseName.length());
+        writer.writeChars(courseName);
+        writer.writeLong(courseID);
+    }
+    
+    public static Course binaryFileRead(DataInputStream reader) throws IOException
+    {
+        Course Temp = new Course();
+        
+        int Length = reader.readInt();
+        StringBuilder S = new StringBuilder(Length);
+        for (int i = 0;i<Length;i++)
+            S.append(reader.readChar());
+        Temp.courseName = S.toString();
+        
+        Temp.courseID = reader.readLong();
         return Temp;
     }
     

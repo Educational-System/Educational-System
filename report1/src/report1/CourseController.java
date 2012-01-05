@@ -183,51 +183,51 @@ public class CourseController {
     
 // <editor-fold desc="Text File Writers">
     
-    public void writeAcademics(String FilePath) throws FileNotFoundException
+    public void writeAcademicsText(String FilePath) throws FileNotFoundException
     {
         PrintWriter writer = new PrintWriter(FilePath);
         for (AcademicStaff A : academics)
-            A.fileWrite(writer);
+            A.textFileWrite(writer);
         writer.close();
     }
     
-    public void writeCourses(String FilePath) throws FileNotFoundException
+    public void writeCoursesText(String FilePath) throws FileNotFoundException
     {
         PrintWriter writer = new PrintWriter(FilePath);
         for (Course C : courses)
-            C.fileWrite(writer);
+            C.textFileWrite(writer);
         writer.close();
     }
     
-    public void writeEnrollments(String FilePath) throws FileNotFoundException
+    public void writeEnrollmentsText(String FilePath) throws FileNotFoundException
     {
         PrintWriter writer = new PrintWriter(FilePath);
         for (Enrollment E : enrollments)
-            E.fileWrite(writer);
+            E.textFileWrite(writer);
         writer.close();
     }
     
-    public void writeSemesters(String FilePath) throws FileNotFoundException
+    public void writeSemestersText(String FilePath) throws FileNotFoundException
     {
         PrintWriter writer = new PrintWriter(FilePath);
         for (Semester S : semesters)
-            S.fileWrite(writer);
+            S.textFileWrite(writer);
         writer.close();
     }
     
-    public void writeStudents(String FilePath) throws FileNotFoundException
+    public void writeStudentsText(String FilePath) throws FileNotFoundException
     {
         PrintWriter writer = new PrintWriter(FilePath);
         for (Student S : students)
-            S.fileWrite(writer);
+            S.textFileWrite(writer);
         writer.close();
     }
     
-    public void writeSupervisors(String FilePath) throws FileNotFoundException
+    public void writeSupervisorsText(String FilePath) throws FileNotFoundException
     {
         PrintWriter writer = new PrintWriter(FilePath);
         for (Supervisor S : supervisors)
-            S.fileWrite(writer);
+            S.textFileWrite(writer);
         writer.close();
     }
     
@@ -235,52 +235,106 @@ public class CourseController {
     
 // <editor-fold desc="Text File Readers">
     
-    public void readAcademics(String FilePath) throws IOException
+    public void readAcademicsText(String FilePath) throws IOException
     {
         BufferedReader reader = new BufferedReader(new FileReader(FilePath));
-        for (AcademicStaff A : academics)
-            academics.add(AcademicStaff.fileRead(reader));
-        reader.close();
+        try
+        {
+            while (true)
+            {
+                AcademicStaff Temp = AcademicStaff.textFileRead(reader);
+                academics.add(Temp);
+            }
+        }
+        catch(IOException E)
+        {
+            reader.close();
+        }
     }
     
-    public void readCourses(String FilePath) throws FileNotFoundException
+    public void readCoursesText(String FilePath) throws IOException
     {
-        BufferedReader reader = new BufferedReader(FilePath);
-        for (Course C : courses)
-            C.fileread(reader);
-        reader.close();
+        BufferedReader reader = new BufferedReader(new FileReader(FilePath));
+        try
+        {
+            while (true)
+            {
+                Course Temp = Course.textFileRead(reader);
+                courses.add(Temp);
+            }
+        }
+        catch(IOException E)
+        {
+            reader.close();
+        }
     }
     
-    public void readEnrollments(String FilePath) throws FileNotFoundException
+    public void readEnrollmentsText(String FilePath) throws IOException
     {
-        BufferedReader reader = new BufferedReader(FilePath);
-        for (Enrollment E : enrollments)
-            E.fileread(reader);
-        reader.close();
+        BufferedReader reader = new BufferedReader(new FileReader(FilePath));
+        try
+        {
+            while (true)
+            {
+                Enrollment Temp = Enrollment.textFileRead(reader);
+                enrollments.add(Temp);
+            }
+        }
+        catch(IOException E)
+        {
+            reader.close();
+        }
     }
     
-    public void readSemesters(String FilePath) throws FileNotFoundException
+    public void readSemestersText(String FilePath) throws IOException
     {
-        BufferedReader reader = new BufferedReader(FilePath);
-        for (Semester S : semesters)
-            S.fileread(reader);
-        reader.close();
+        BufferedReader reader = new BufferedReader(new FileReader(FilePath));
+        try
+        {
+            while (true)
+            {
+                Semester Temp = Semester.textFileRead(reader);
+                semesters.add(Temp);
+            }
+        }
+        catch(IOException E)
+        {
+            reader.close();
+        }
     }
     
-    public void readStudents(String FilePath) throws FileNotFoundException
+    public void readStudentsText(String FilePath) throws IOException
     {
-        BufferedReader reader = new BufferedReader(FilePath);
-        for (Student S : students)
-            S.fileread(reader);
-        reader.close();
+        BufferedReader reader = new BufferedReader(new FileReader(FilePath));
+        try
+        {
+            while (true)
+            {
+                Student Temp = Student.textFileRead(reader);
+                students.add(Temp);
+            }
+        }
+        catch(IOException E)
+        {
+            reader.close();
+        }
     }
     
-    public void readSupervisors(String FilePath) throws FileNotFoundException
+    public void readSupervisorsText(String FilePath) throws IOException
     {
-        BufferedReader reader = new BufferedReader(FilePath);
-        for (Supervisor S : supervisors)
-            S.fileread(reader);
-        reader.close();
+        BufferedReader reader = new BufferedReader(new FileReader(FilePath));
+        try
+        {
+            while (true)
+            {
+                Supervisor Temp = Supervisor.textFileRead(reader);
+                supervisors.add(Temp);
+            }
+        }
+        catch(IOException E)
+        {
+            reader.close();
+        }
     }
     
 // </editor-fold>

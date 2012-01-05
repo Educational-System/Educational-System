@@ -5,6 +5,8 @@
 package report1;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -97,19 +99,38 @@ public class Supervisor implements Cloneable {
     
 // <editor-fold desc="Text File IO">
     
-    public void fileWrite(PrintWriter writer)
+    public void textFileWrite(PrintWriter writer)
     {
-        academicStaff.fileWrite(writer);
-        course.fileWrite(writer);
-        semester.fileWrite(writer);
+        academicStaff.textFileWrite(writer);
+        course.textFileWrite(writer);
+        semester.textFileWrite(writer);
         writer.println();
     }
     
-    public static Supervisor fileRead(BufferedReader reader) throws IOException
+    public static Supervisor textFileRead(BufferedReader reader) throws IOException
     {
-        AcademicStaff A = AcademicStaff.fileRead(reader);
-        Course C = Course.fileRead(reader);
-        Semester S = Semester.fileRead(reader);
+        AcademicStaff A = AcademicStaff.textFileRead(reader);
+        Course C = Course.textFileRead(reader);
+        Semester S = Semester.textFileRead(reader);
+        return new Supervisor(A, C, S);
+    }
+    
+// </editor-fold>
+    
+// <editor-fold desc="Binary File IO">
+    
+    public void binaryFileWrite(DataOutputStream writer) throws IOException
+    {
+        academicStaff.binaryFileWrite(writer);
+        course.binaryFileWrite(writer);
+        semester.binaryFileWrite(writer);
+    }
+    
+    public static Supervisor binaryFileRead(DataInputStream reader) throws IOException
+    {
+        AcademicStaff A = AcademicStaff.binaryFileRead(reader);
+        Course C = Course.binaryFileRead(reader);
+        Semester S = Semester.binaryFileRead(reader);
         return new Supervisor(A, C, S);
     }
     
