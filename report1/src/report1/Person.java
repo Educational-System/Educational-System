@@ -5,11 +5,13 @@
 
 package report1;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ASUS
  */
-public abstract class Person implements Cloneable {
+public abstract class Person implements Cloneable, Serializable {
     
 // <editor-fold desc="Private Data Members">
     

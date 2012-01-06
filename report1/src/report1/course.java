@@ -9,13 +9,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.StringTokenizer;
 
 /**
  *
  * @author ASUS
  */
-public class Course implements Cloneable {
+public class Course implements Cloneable, Serializable {
     
 // <editor-fold desc="Private Data Members">
     

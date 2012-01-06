@@ -9,12 +9,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 
 /**
  *
  * @author ASUS
  */
-public class Enrollment implements Cloneable, Comparable<Enrollment> {
+public class Enrollment implements Cloneable, Comparable<Enrollment>, Serializable {
 
 // <editor-fold desc="Private Data Members">
     

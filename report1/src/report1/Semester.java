@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.StringTokenizer;
 
@@ -16,7 +17,7 @@ import java.util.StringTokenizer;
  *
  * @author ASUS
  */
-public class Semester implements Comparable<Semester> {
+public class Semester implements Comparable<Semester>, Serializable {
 
 // <editor-fold desc="Private Data Members">
 

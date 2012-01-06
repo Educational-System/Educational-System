@@ -9,12 +9,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 
 /**
  *
  * @author ASUS
  */
-public class Supervisor implements Cloneable {
+public class Supervisor implements Cloneable, Serializable {
     
 // <editor-fold desc="Private Data Members">
     
